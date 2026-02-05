@@ -36,6 +36,12 @@ function Simulate() {
 
     const info = algorithmInfo[algorithm];
 
+    useEffect(() => {
+  if (result && currentStep === 0) {
+    setCurrentStep(1);
+  }
+}, [result]);
+
     // Playback control functions
     const stepForward = useCallback(() => {
         if (result && currentStep < result.finalOrder.length - 1) {
@@ -147,6 +153,7 @@ function Simulate() {
     };
 
     const metrics = calculateCurrentMetrics();
+    console.log('Current Metrics:', metrics);
 
     return (
         <div className="container" style={{ paddingBottom: 'var(--space-3xl)' }}>
@@ -238,10 +245,7 @@ function Simulate() {
                             <div className="metric-label">Current Position</div>
                             <div className="metric-value highlight">{metrics.currentPosition}</div>
                         </div>
-                        <div className="metric-item">
-                            <div className="metric-label">Seek Distance</div>
-                            <div className="metric-value">{metrics.seekDistance}</div>
-                        </div>
+                     
                         <div className="metric-item">
                             <div className="metric-label">Progress</div>
                             <div className="metric-value">{metrics.completedRequests} / {metrics.totalRequests}</div>
