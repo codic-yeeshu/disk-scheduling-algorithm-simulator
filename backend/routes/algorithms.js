@@ -42,4 +42,15 @@ router.post("/fcfs", validateInput, (req, res) => {
   }
 });
 
+// SSTF endpoint
+router.post('/sstf', validateInput, (req, res) => {
+  try {
+    const { sequence, head } = req.body;
+    const result = algorithms.sstf([...sequence], head);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

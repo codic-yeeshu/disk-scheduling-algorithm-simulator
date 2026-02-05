@@ -34,7 +34,37 @@ function fcfs(requestSequence, head) {
   };
 }
 
+
+// ---------- SSTF Algorithm ---------------
+// Time Complexity: O(n^2)
+function sstf(requestSequence, head) {
+  const sequence = [...requestSequence];
+  const len = sequence.length;
+  const requestFinalOrder = [head];
+  let totalSeekCount = 0;
+
+  for (let i = 0; i < len; ++i) {
+    const tmp = [];
+    for (let j = 0; j < sequence.length; ++j) {
+      tmp.push(Math.abs(requestFinalOrder[requestFinalOrder.length - 1] - sequence[j]));
+    }
+
+    const minIndex = tmp.indexOf(Math.min.apply(null, tmp));
+    totalSeekCount += tmp[minIndex];
+    requestFinalOrder.push(sequence[minIndex]);
+    sequence.splice(minIndex, 1);
+  }
+
+  return {
+    totalSeekCount,
+    finalOrder: requestFinalOrder,
+    averageSeekCount: (totalSeekCount / len).toFixed(2)
+  };
+}
+
+
 module.exports = {
   isValidInputNumbers,
   fcfs,
+  sstf
 };
