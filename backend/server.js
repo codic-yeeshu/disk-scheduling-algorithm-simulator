@@ -1,5 +1,6 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+const algorithmRoutes = require("./routes/algorithms");
 
 const app = express();
 const PORT = process.env.PORT || 5002;
@@ -8,10 +9,11 @@ const PORT = process.env.PORT || 5002;
 app.use(cors());
 app.use(express.json());
 
+app.use("/api", algorithmRoutes);
 
 // Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Disk Scheduling API is running' });
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", message: "Disk Scheduling API is running" });
 });
 
 // Start server
