@@ -43,10 +43,20 @@ router.post("/fcfs", validateInput, (req, res) => {
 });
 
 // SSTF endpoint
-router.post('/sstf', validateInput, (req, res) => {
+router.post("/sstf", validateInput, (req, res) => {
   try {
     const { sequence, head } = req.body;
     const result = algorithms.sstf([...sequence], head);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post("/scan", validateInput, (req, res) => {
+  try {
+    const { sequence, head, direction = "Right" } = req.body;
+    const result = algorithms.scan([...sequence], head, direction);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
