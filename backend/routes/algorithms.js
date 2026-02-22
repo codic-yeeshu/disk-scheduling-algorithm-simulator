@@ -83,4 +83,15 @@ router.post('/look', validateInput, (req, res) => {
   }
 });
 
+// C-LOOK endpoint
+router.post('/clook', validateInput, (req, res) => {
+  try {
+    const { sequence, head, direction = 'Right' } = req.body;
+    const result = algorithms.clook([...sequence], head, direction);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
