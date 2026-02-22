@@ -62,5 +62,15 @@ router.post("/scan", validateInput, (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// C-SCAN endpoint
+router.post("/cscan", validateInput, (req, res) => {
+  try {
+    const { sequence, head, direction = "Right" } = req.body;
+    const result = algorithms.cscan([...sequence], head, direction);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = router;

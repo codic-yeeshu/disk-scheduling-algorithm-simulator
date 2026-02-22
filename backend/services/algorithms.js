@@ -113,10 +113,68 @@ function scan(requestSequence, head, direction) {
     averageSeekCount: (totalSeekCount / requestSequence.length).toFixed(2),
   };
 }
+// ---------- C-SCAN Algorithm ---------------
+function cscan(requestSequence, head, direction) {
+  const requestFinalOrder = [head];
+  let tmp = 0;
+  const tmpAry = [...requestSequence];
+
+  const sorted = tmpAry.sort((a, b) => b - a);
+
+  for (let i = 0; i < sorted.length; ++i) {
+    if (head > sorted[i]) {
+      tmp = i;
+      break;
+    }
+  }
+
+  let totalSeekCount;
+
+  if (direction === "Right") {
+    for (let i = tmp - 1; i >= 0; --i) {
+      requestFinalOrder.push(sorted[i]);
+    }
+    if (requestFinalOrder[requestFinalOrder.length - 1] !== 199) {
+      requestFinalOrder.push(199);
+    }
+    for (let i = sorted.length - 1; i >= tmp; --i) {
+      if (i === sorted.length - 1 && sorted[i] !== 0) {
+        requestFinalOrder.push(0);
+      }
+      requestFinalOrder.push(sorted[i]);
+    }
+    totalSeekCount = Math.abs(
+      199 - head + 199 + requestFinalOrder[requestFinalOrder.length - 1]
+    );
+  } else {
+    for (let i = tmp; i <= sorted.length - 1; ++i) {
+      requestFinalOrder.push(sorted[i]);
+    }
+    if (requestFinalOrder[requestFinalOrder.length - 1] !== 0) {
+      requestFinalOrder.push(0);
+    }
+    for (let i = 0; i < tmp; ++i) {
+      if (i === 0 && sorted[i] !== 199) {
+        requestFinalOrder.push(199);
+      }
+      requestFinalOrder.push(sorted[i]);
+    }
+    totalSeekCount = Math.abs(
+      head + 199 + (199 - requestFinalOrder[requestFinalOrder.length - 1])
+    );
+  }
+
+  return {
+    totalSeekCount,
+    finalOrder: requestFinalOrder,
+    averageSeekCount: (totalSeekCount / requestSequence.length).toFixed(2),
+  };
+}
 
 module.exports = {
   isValidInputNumbers,
   fcfs,
   sstf,
   scan,
+  cscan,
 };
