@@ -214,6 +214,51 @@ function look(requestSequence, head, direction) {
     averageSeekCount: (totalSeekCount / requestSequence.length).toFixed(2)
   };
 }
+// ---------- C-LOOK Algorithm ---------------
+function clook(requestSequence, head, direction) {
+  const requestFinalOrder = [head];
+  let tmp = 0;
+  const tmpAry = [...requestSequence];
+  
+  const sorted = tmpAry.sort((a, b) => a - b);
+
+  for (let i = 0; i < sorted.length; ++i) {
+    if (sorted[i] > head) {
+      tmp = i;
+      break;
+    }
+  }
+
+  let totalSeekCount;
+
+  if (direction === "Right") {
+    for (let i = tmp; i < sorted.length; ++i) {
+      requestFinalOrder.push(sorted[i]);
+    }
+    for (let i = 0; i < tmp; ++i) {
+      requestFinalOrder.push(sorted[i]);
+    }
+    totalSeekCount = Math.abs(sorted[sorted.length - 1] - head + 
+      Math.abs(sorted[sorted.length - 1] - sorted[0]) + 
+      Math.abs(requestFinalOrder[requestFinalOrder.length - 1] - sorted[0]));
+  } else {
+    for (let i = tmp - 1; i >= 0; --i) {
+      requestFinalOrder.push(sorted[i]);
+    }
+    for (let i = sorted.length - 1; i >= tmp; --i) {
+      requestFinalOrder.push(sorted[i]);
+    }
+    totalSeekCount = Math.abs(head - sorted[0]) + 
+      Math.abs(sorted[sorted.length - 1] - sorted[0]) + 
+      Math.abs(sorted[sorted.length - 1] - sorted[tmp]);
+  }
+
+  return {
+    totalSeekCount,
+    finalOrder: requestFinalOrder,
+    averageSeekCount: (totalSeekCount / requestSequence.length).toFixed(2)
+  };
+}
 
 module.exports = {
   isValidInputNumbers,
@@ -221,5 +266,6 @@ module.exports = {
   sstf,
   scan,
   cscan,
-  look
+  look,
+  clook
 };
