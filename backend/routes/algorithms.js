@@ -73,4 +73,14 @@ router.post("/cscan", validateInput, (req, res) => {
   }
 });
 
+router.post('/look', validateInput, (req, res) => {
+  try {
+    const { sequence, head, direction = 'Right' } = req.body;
+    const result = algorithms.look([...sequence], head, direction);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
