@@ -13,6 +13,30 @@ const algorithmData = [
         description: 'Selects the request with minimum seek time from the current head position. This results in less average response time but can cause starvation for some requests.',
         color: '#8b5cf6'
     },
+    {
+        name: 'SCAN',
+        fullName: 'SCAN (Elevator Algorithm)',
+        description: 'The disk arm starts moving in one direction and services all requests until it reaches the end, then reverses direction. Also known as the elevator algorithm.',
+        color: '#06b6d4'
+    },
+    {
+        name: 'C-SCAN',
+        fullName: 'Circular SCAN',
+        description: 'A variant of SCAN where the arm only goes in one direction. When it reaches the end, it jumps to the beginning without servicing requests during the return trip.',
+        color: '#10b981'
+    },
+    {
+        name: 'LOOK',
+        fullName: 'LOOK Algorithm',
+        description: 'An improved version of SCAN where the arm only goes as far as the last request in each direction, rather than going to the end of the disk.',
+        color: '#f59e0b'
+    },
+    {
+        name: 'C-LOOK',
+        fullName: 'Circular LOOK',
+        description: 'Combines C-SCAN and LOOK approaches. The arm goes only to the farthest request in the current direction, then jumps to the farthest request at the other end.',
+        color: '#ec4899'
+    }
 ];
 
 const techStack = [

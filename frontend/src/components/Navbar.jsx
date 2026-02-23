@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-const algorithms = ['fcfs', 'sstf'];
+const algorithms = ['fcfs', 'sstf', 'scan', 'cscan', 'look', 'clook'];
 
 function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -49,6 +49,12 @@ function Navbar() {
                                 </Link>
                             ))}
                         </div>
+                    </li>
+
+                    <li>
+                        <Link to="/compare" className={`nav-link ${isActive('/compare') ? 'active' : ''}`}>
+                            Compare
+                        </Link>
                     </li>
 
                     <li>

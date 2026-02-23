@@ -18,6 +18,34 @@ const algorithmInfo = {
         description: 'Requests with the shortest seek time from the current head position are executed first.',
         complexity: 'O(n²)',
         needsDirection: false
+    },
+    scan: {
+        name: 'SCAN',
+        fullName: 'SCAN (Elevator Algorithm)',
+        description: 'The disk arm moves in one direction servicing requests until it reaches the end, then reverses direction.',
+        complexity: 'O(n log n)',
+        needsDirection: true
+    },
+    cscan: {
+        name: 'C-SCAN',
+        fullName: 'Circular SCAN',
+        description: 'The disk arm moves in a circular fashion, jumping to the other end after reaching one end.',
+        complexity: 'O(n log n)',
+        needsDirection: true
+    },
+    look: {
+        name: 'LOOK',
+        fullName: 'LOOK Algorithm',
+        description: 'Similar to SCAN, but the arm only goes as far as the last request in each direction.',
+        complexity: 'O(n log n)',
+        needsDirection: true
+    },
+    clook: {
+        name: 'C-LOOK',
+        fullName: 'Circular LOOK',
+        description: 'Combines C-SCAN and LOOK approaches. The arm goes to the last request and jumps to the other end.',
+        complexity: 'O(n log n)',
+        needsDirection: true
     }
 };
 
@@ -35,12 +63,6 @@ function Simulate() {
     const playbackRef = useRef(null);
 
     const info = algorithmInfo[algorithm];
-
-    useEffect(() => {
-  if (result && currentStep === 0) {
-    setCurrentStep(1);
-  }
-}, [result]);
 
     // Playback control functions
     const stepForward = useCallback(() => {
@@ -153,7 +175,6 @@ function Simulate() {
     };
 
     const metrics = calculateCurrentMetrics();
-    console.log('Current Metrics:', metrics);
 
     return (
         <div className="container" style={{ paddingBottom: 'var(--space-3xl)' }}>
@@ -245,7 +266,10 @@ function Simulate() {
                             <div className="metric-label">Current Position</div>
                             <div className="metric-value highlight">{metrics.currentPosition}</div>
                         </div>
-                     
+                        <div className="metric-item">
+                            <div className="metric-label">Seek Distance</div>
+                            <div className="metric-value">{metrics.seekDistance}</div>
+                        </div>
                         <div className="metric-item">
                             <div className="metric-label">Progress</div>
                             <div className="metric-value">{metrics.completedRequests} / {metrics.totalRequests}</div>
@@ -257,7 +281,7 @@ function Simulate() {
                     </div>
 
                     {/* Playback Controls */}
-                    {/* <div className="playback-controls">
+                    <div className="playback-controls">
                         <button
                             className="playback-btn"
                             onClick={reset}
@@ -322,7 +346,7 @@ function Simulate() {
                         <div className="step-indicator">
                             Step {currentStep + 1} of {result.finalOrder.length}
                         </div>
-                    </div> */}
+                    </div>
 
                     {/* Results Summary */}
                     <div className="results-section">
@@ -387,6 +411,7 @@ function Simulate() {
                 marginTop: 'var(--space-2xl)'
             }}>
                 <Link to="/" className="btn btn-secondary">← Back to Home</Link>
+                <Link to="/compare" className="btn btn-secondary">Compare All →</Link>
             </div>
         </div>
     );

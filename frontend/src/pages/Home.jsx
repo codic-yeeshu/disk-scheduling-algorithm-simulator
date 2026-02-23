@@ -11,6 +11,26 @@ const algorithms = [
         name: 'SSTF',
         algorithm: 'sstf',
         description: 'Shortest Seek Time First - Requests with the shortest seek time are executed first, minimizing arm movement.'
+    },
+    {
+        name: 'SCAN',
+        algorithm: 'scan',
+        description: 'Elevator Algorithm - The disk arm moves in one direction, servicing requests until the end, then reverses direction.'
+    },
+    {
+        name: 'C-SCAN',
+        algorithm: 'cscan',
+        description: 'Circular SCAN - The disk arm moves in a circular fashion, going to the other end of the disk after reaching one end.'
+    },
+    {
+        name: 'LOOK',
+        algorithm: 'look',
+        description: 'LOOK Algorithm - Similar to SCAN, but the arm only goes as far as the last request in each direction.'
+    },
+    {
+        name: 'C-LOOK',
+        algorithm: 'clook',
+        description: 'Circular LOOK - Combines C-SCAN and LOOK, preventing extra delay due to traversal to disk ends.'
     }
 ];
 
@@ -22,10 +42,18 @@ function Home() {
                 <h1>Disk Scheduling Algorithm Visualizer</h1>
                 <p>
                     Explore and understand how different disk scheduling algorithms work.
-                    Visualize the head movement patterns across
-                    FCFS and SSTF algorithms.
+                    Visualize the head movement patterns and compare performance across
+                    FCFS, SSTF, SCAN, C-SCAN, LOOK, and C-LOOK algorithms.
                 </p>
                 <div className="hero-actions">
+                    <Link to="/compare" className="btn btn-primary" style={{
+                        padding: 'var(--space-md) var(--space-2xl)'
+                    }}>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                            <path d="M2 14V4h3v10H2zm5.5 0V7h3v7h-3zM13 14V2h3v12h-3z" />
+                        </svg>
+                        Compare All Algorithms
+                    </Link>
                     <Link to="/about" className="btn btn-secondary" style={{
                         padding: 'var(--space-md) var(--space-2xl)'
                     }}>
@@ -80,6 +108,9 @@ function Home() {
                     gap: 'var(--space-md)',
                     flexWrap: 'wrap'
                 }}>
+                    <Link to="/compare" className="btn btn-primary">
+                        Compare Performance
+                    </Link>
                     <Link to="/about" className="btn btn-secondary">
                         Read More
                     </Link>

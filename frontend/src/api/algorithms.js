@@ -7,3 +7,7 @@ export const runAlgorithm = async (algorithm, data) => {
   return response.data;
 };
 
+export const compareAlgorithms = async (data) => {
+  const response = await axios.post(`${API_BASE}/compare`, data);
+  return response.data;
+};

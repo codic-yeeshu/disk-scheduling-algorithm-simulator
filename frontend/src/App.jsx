@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Simulate from './pages/Simulate';
+import Compare from './pages/Compare';
 import About from './pages/About';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/simulate/:algorithm" element={<Simulate />} />
+                        <Route path="/compare" element={<Compare />} />
                         <Route path="/about" element={<About />} />
                     </Routes>
                 </main>
