@@ -4,7 +4,7 @@ const router = express.Router();
 const algorithms = require("../services/algorithms");
 
 const validateInput = (req, res, next) => {
-  const { sequence, head, direction } = req.body;
+  const { sequence, head } = req.body;
 
   if (!sequence || !Array.isArray(sequence) || sequence.length === 0) {
     return res.status(400).json({ error: "Invalid request sequence" });
@@ -88,6 +88,17 @@ router.post('/clook', validateInput, (req, res) => {
   try {
     const { sequence, head, direction = 'Right' } = req.body;
     const result = algorithms.clook([...sequence], head, direction);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Compare all algorithms endpoint
+router.post('/compare', validateInput, (req, res) => {
+  try {
+    const { sequence, head, direction = 'Right' } = req.body;
+    const result = algorithms.compareAll([...sequence], head, direction);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });

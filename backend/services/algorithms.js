@@ -260,6 +260,40 @@ function clook(requestSequence, head, direction) {
   };
 }
 
+
+// Compare all algorithms
+function compareAll(requestSequence, head, direction) {
+	const fcfsSeq = [...requestSequence];
+	const sstfSeq = [...requestSequence];
+	const scanSeq = [...requestSequence];
+	const cscanSeq = [...requestSequence];
+	const lookSeq = [...requestSequence];
+	const clookSeq = [...requestSequence];
+
+	const results = {
+		fcfs: fcfs(fcfsSeq, head),
+		sstf: sstf(sstfSeq, head),
+		scan: scan(scanSeq, head, direction),
+		cscan: cscan(cscanSeq, head, direction),
+		look: look(lookSeq, head, direction),
+		clook: clook(clookSeq, head, direction),
+	};
+
+	const seekCounts = [
+		results.fcfs.totalSeekCount,
+		results.sstf.totalSeekCount,
+		results.scan.totalSeekCount,
+		results.cscan.totalSeekCount,
+		results.look.totalSeekCount,
+		results.clook.totalSeekCount,
+	];
+
+	results.minimumSeekCount = Math.min(...seekCounts);
+
+	return results;
+}
+
+
 module.exports = {
   isValidInputNumbers,
   fcfs,
@@ -267,5 +301,6 @@ module.exports = {
   scan,
   cscan,
   look,
-  clook
+  clook,
+  compareAll
 };
